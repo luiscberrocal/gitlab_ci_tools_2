@@ -14,11 +14,7 @@ def decode(encrypted_text):
     pass
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=['encrypt', 'decrypt'])
-    parser.add_argument('environment', choices=['staging', 'prod'])
-    args = parser.parse_args()
+def encode_decode(args):
     encoding = 'utf-8'
     if args.action == 'decrypt':
         clipboard_content = pyperclip.paste()
@@ -36,7 +32,6 @@ def main():
         print(f'Encrypted file: {enc_filename}')
 
 
-
 def write_clipboard(environment, source, source_type, content):
     target_path = pathlib.Path(__file__).parent
     times_stamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -44,12 +39,3 @@ def write_clipboard(environment, source, source_type, content):
     with open(clip_file, 'w') as c_file:
         c_file.write(content)
     return clip_file
-
-
-if __name__ == '__main__':
-    """
-    Copy encrypted text form CI
-    run:
-        python output/b64_util.py decrypt staging
-    """
-    main()
