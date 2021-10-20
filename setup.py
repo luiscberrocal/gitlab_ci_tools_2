@@ -10,7 +10,8 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
 
 test_requirements = ['pytest>=3', ]
 
@@ -44,6 +45,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/luiscberrocal/gitlab_ci_tools_2',
-    version='0.1.1',
+    version='0.1.2',
     zip_safe=False,
 )

@@ -10,18 +10,25 @@ def encode(clear_text):
     pass
 
 
-def decode(encrypted_text):
-    pass
+def decode(encrypted_text, encoding):
+    clear_content = base64.b64decode(encrypted_text.encode(encoding))
+    return clear_content
+
+
+def write_files(encrypted_text, clear_content, environment, action, encoding):
+    enc_filename = write_clipboard(environment, action, 'enc', encrypted_text)
+    clear_filename = write_clipboard(environment, action, 'dec', clear_content.decode(encoding))
+    return enc_filename, clear_filename
 
 
 def encode_decode(args):
     encoding = 'utf-8'
     if args.action == 'decrypt':
         clipboard_content = pyperclip.paste()
-        enc_filename = write_clipboard(args.environment, args.action, 'enc', clipboard_content)
+        clear_content = decode(clipboard_content, encoding)
+        enc_filename, clear_filename = write_files(clipboard_content, clear_content, args.environment,
+                                                   args.action, encoding)
         print(f'Encrypted file: {enc_filename}')
-        clear_content = base64.b64decode(clipboard_content.encode(encoding))
-        clear_filename = write_clipboard(args.environment, args.action, 'dec', clear_content.decode(encoding))
         print(f'Decrypted file: {clear_filename}')
     else:
         clipboard_content = pyperclip.paste()
