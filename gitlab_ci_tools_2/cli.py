@@ -2,16 +2,16 @@
 import argparse
 import sys
 
+from gitlab_ci_tools_2.b64_util import encode_decode
+
 
 def main():
     """Console script for gitlab_ci_tools_2."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('_', nargs='*')
+    parser.add_argument('action', choices=['encrypt', 'decrypt'])
+    parser.add_argument('environment', choices=['staging', 'prod'])
     args = parser.parse_args()
-
-    print("Arguments: " + str(args._))
-    print("Replace this message by putting your code into "
-          "gitlab_ci_tools_2.cli.main")
+    encode_decode(args)
     return 0
 
 
