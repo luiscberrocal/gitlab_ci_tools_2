@@ -10,6 +10,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('action', choices=['encrypt', 'decrypt'])
     parser.add_argument('environment', choices=['staging', 'prod'])
+    parser.add_argument('-v', "--verbose", help="increase output verbosity",
+                        action="store_true")
+    parser.add_argument('-f', '--folder', action='store', type=str, required=True,
+                        help='Output folder for results.')
     args = parser.parse_args()
     encode_decode(args)
     return 0
