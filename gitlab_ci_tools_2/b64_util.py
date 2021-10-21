@@ -44,7 +44,6 @@ def encode_decode(args):
 
 
 def write_clipboard(environment, source, source_type, content, target_path):
-    # target_path = pathlib.Path(__file__).parent
     times_stamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     clip_file = os.path.join(target_path, f'{times_stamp}-{source}-{environment}-{source_type}.txt')
     with open(clip_file, 'w') as c_file:
