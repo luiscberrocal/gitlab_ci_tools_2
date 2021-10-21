@@ -21,7 +21,7 @@ def decode(encrypted_text: str, encoding: str) -> str:
 def write_files(encrypted_text: str, clear_content: str, environment: str, action: str,
                 encoding: str, target_folder: str) -> Tuple[str, str]:
     enc_filename = write_clipboard(environment, action, 'enc', encrypted_text, target_folder)
-    clear_filename = write_clipboard(environment, action, 'dec', clear_content.decode(encoding), target_folder)
+    clear_filename = write_clipboard(environment, action, 'dec', clear_content, target_folder)
     return enc_filename, clear_filename
 
 
