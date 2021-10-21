@@ -3,22 +3,25 @@ import base64
 import os
 import pathlib
 from datetime import datetime
+from typing import Tuple
 
 import pyperclip
 
 
-def encode(clear_text):
-    pass
+def encode(clear_text: str, encoding: str) -> str:
+    encrypted_content = base64.b64encode(clear_text.encode(encoding)).decode(encoding)
+    return encrypted_content
 
 
-def decode(encrypted_text, encoding):
-    clear_content = base64.b64decode(encrypted_text.encode(encoding))
+def decode(encrypted_text: str, encoding: str) -> str:
+    clear_content = base64.b64decode(encrypted_text.encode(encoding)).decode(encoding)
     return clear_content
 
 
-def write_files(encrypted_text, clear_content, environment, action, encoding, target_folder):
+def write_files(encrypted_text: str, clear_content: str, environment: str, action: str,
+                encoding: str, target_folder: str) -> Tuple[str, str]:
     enc_filename = write_clipboard(environment, action, 'enc', encrypted_text, target_folder)
-    clear_filename = write_clipboard(environment, action, 'dec', clear_content.decode(encoding), target_folder)
+    clear_filename = write_clipboard(environment, action, 'dec', clear_content, target_folder)
     return enc_filename, clear_filename
 
 
@@ -33,7 +36,7 @@ def encode_decode(args):
         print(f'Decrypted file: {clear_filename}')
     else:
         clipboard_content = pyperclip.paste()
-        encrypted_content = base64.b64encode(clipboard_content.encode(encoding)).decode(encoding)
+        encrypted_content = encode(clipboard_content, encoding)
         print(encrypted_content)
         pyperclip.copy(encrypted_content)
         enc_filename = write_clipboard(args.environment, args.action, 'enc', encrypted_content, args.folder)
