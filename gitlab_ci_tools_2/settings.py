@@ -10,6 +10,7 @@ def create_configuration(config_file):
                             'ci_url_template': "https://gitlab.com/api/v4/projects/{ci_project_id}/variables"}
     with open(config_file, 'w') as cfg_file:
         config.write(cfg_file)
+    return config
 
 
 def get_or_create_configuration(config_file):

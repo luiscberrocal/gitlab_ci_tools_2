@@ -43,9 +43,9 @@ def encode_decode(args):
         print(f'Encrypted file: {enc_filename}')
 
 
-def write_clipboard(environment, source, source_type, content, target_path):
+def write_clipboard(environment, action, source_type, content, target_path):
     times_stamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    clip_file = os.path.join(target_path, f'{times_stamp}-{source}-{environment}-{source_type}.txt')
+    clip_file = os.path.join(target_path, f'{times_stamp}-{action}-{environment}-{source_type}.txt')
     with open(clip_file, 'w') as c_file:
         c_file.write(content)
     return clip_file
