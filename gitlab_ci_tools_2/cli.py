@@ -14,6 +14,8 @@ def main():
                         action="store_true")
     parser.add_argument('-f', '--folder', action='store', type=str, required=True,
                         help='Output folder for results.')
+    parser.add_argument('-a', '--app', action='store', type=str, required=False,
+                        help='Application name without spaces. This name will be appended to output files')
     args = parser.parse_args()
     encode_decode(args)
     return 0
