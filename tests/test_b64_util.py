@@ -1,16 +1,16 @@
 import pathlib
 
+import hypothesis.strategies as st
 import pytest
 from hypothesis import given
-import hypothesis.strategies as st
 
-from gitlab_ci_tools_2.b64_util import encode, decode
+from gitlab_ci_tools_2.b64_util import encode, decode, write_clipboard
 
 
 @pytest.fixture(scope="module")
 def my_test_folder():
-    folder = pathlib.Path(__file__).parent.parent / 'output'
-    folder.mkdir(exist_ok=True)
+    folder = pathlib.Path(__file__).parent.parent / 'output' / 'pytests'
+    folder.mkdir(exist_ok=True, parents=True)
     return folder
 
 
@@ -22,10 +22,8 @@ def test_encode_decode(clear_text, encoding):
 
 
 @given(environment=st.sampled_from(['prod', 'staging']),
-       action=st.sampled_from(['encrypt', 'decrypt']))
-def test_write_clipboard(environment, my_test_folder):
-    folder = my_test_folder / environment
-    print(folder)
-
-    #write_clipboard(environment, action, source_type, content, target_path):
-
+       action=st.sampled_from(['encrypt', 'decrypt']),
+       source_type=st.sampled_from(['encrypt', 'decrypt']),
+       content=st.text())
+def test_write_clipboard(environment, action, source_type, content, my_test_folder):
+    filename = write_clipboard(environment, action, source_type, content, my_test_folder)
